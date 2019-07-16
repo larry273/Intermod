@@ -76,36 +76,36 @@ void calculate(int order_num, int frequencies_num)
 				{
 					sum += frequency_vec[i] * coefficient_vec[k][j];
 				
-					if (coefficient_vec[k][j] >= 0)
+					if (coefficient_vec[k][j] >= 0) //if a positive value, add a positive sign to assist in formatting
 					{
 						equation += "+";
 					}
 					
-					temp_holder = coefficient_vec[k][j];
+					temp_holder = coefficient_vec[k][j]; //store value into float
 					
-					output_format << std::fixed << std::setprecision(0) << temp_holder;
-					equation += output_format.str();
-					output_format.str("");
-					equation += " * ";
+					output_format << std::fixed << std::setprecision(0) << temp_holder;//format float
+					equation += output_format.str(); //add to string
+					output_format.str(""); //clear output string stream
+					equation += " * "; 
 		
-					temp_holder = frequency_vec[i];
+					temp_holder = frequency_vec[i]; 
 					
 					output_format << std::fixed << std::setprecision(2) << temp_holder;
 					equation += output_format.str();
 					output_format.str("");
 					
-					if (time < frequencies_num - 1)
+					if (time < frequencies_num - 1) //add a plus sign for continuing equation
 					{
 						equation += " + ";
 					}
 				}
-				if (sum < (range_frequencies + frequency_vec[i]))
+				if (sum < (range_frequencies + frequency_vec[i])) //if sum is within range
 				{
 					if (sum > (frequency_vec[i] - range_frequencies))
 					{
 						flag = 1;
 					}
-					if (flag == 1)
+					if (flag == 1) 
 					{
 						if (result_vec.size() == 0)
 						{
@@ -165,7 +165,8 @@ int main()
 
 			//generate range based on order
 			std::vector<float> coeffArray;
-			for (int i = -order + 1; i < order; i++) {
+			for (int i = -order + 1; i < order; i++) 
+			{
 				coeffArray.push_back(i);
 			}
 			coeffArray.erase(coeffArray.begin() + order - 1);
