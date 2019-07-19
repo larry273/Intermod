@@ -20,14 +20,17 @@ std::vector<float> result_vec; //vector that will hold all results
 std::vector<int> coefficient_produce; //vector that will have the possible coefficients 
 std::vector<std::vector<float>> freq_k;
 std::vector<std::string> equation_vec;
+std::vector<std::vector<float>> total;
 
 //find the absolute coeffiecient combinations for the order
 void subsetSummation(std::vector<float> numbers, int target, std::vector<float> partial = {}) {
+	
 	//find absolute values of numbers then find sum
 	std::vector<float> abs_numbers;
-	for (int i = 0; i < partial.size(); i++) {
+	for (int i = 0; i < partial.size(); i++) 
+	{
 		abs_numbers.push_back(abs(partial[i]));
-		while (partial.size() <= 2)
+		while (partial.size() < 2)
 		{
 			partial.push_back(0);
 		}
@@ -35,29 +38,19 @@ void subsetSummation(std::vector<float> numbers, int target, std::vector<float> 
 	int sum = accumulate(abs_numbers.begin(), abs_numbers.end(), 0);
 
 	//if sum equals target print and add vector of values to total
-	if (sum == target) {
-		/*std::cout << "[ ";
-		for (int i = 0; i < partial.size(); i++) {
-			std::cout << partial.at(i) << " ";
-		}
-		std::cout << "] = " << target << std::endl;*/
-		
-		while (partial.size() <= num_frequencies)
-		{
-			/*if (partial.size() != target)
-			{*/
-				partial.push_back(0);
-			//}
-		}
+	if (sum == target) 
+	{
 		freq_k.push_back(partial);
 	}
 	//break recursion on equal target or greater than target
 	if (sum >= target) {
+		//hi
 		return;
 	}
 
 	//iterate through range recursively 
-	for (int i = 0; i < numbers.size(); i++) {
+	for (int i = 0; i < numbers.size(); i++) 
+	{
 		int n = numbers[i];
 		std::vector<float> remaining(numbers.begin() + i + 1, numbers.end());
 
@@ -76,16 +69,14 @@ void calculate(int order_num, int frequencies_num)
 
 	float sum = 0; //sum for adding frequencies together 
 	std::string equation;
-	float temp_holder;
 	int order_sum = 0;
 	std::ostringstream output_format;
 
 	//function to get all permutations of frequencies: 
-	std::vector<std::vector<float>> total;
 	std::vector<float> p;
 
-	//std::iota(frequency_vec.begin(), frequency_vec.end(),1);
-	int permute_counter = 2;
+	int permute_counter = 2; //only for 2 and 3 frequency combos
+	//this is where the problem is:
 	do
 	{
 		do
@@ -94,6 +85,7 @@ void calculate(int order_num, int frequencies_num)
 			{
 				std::cout << frequency_vec[i] << " ";
 				p.push_back(frequency_vec[i]);
+
 			}
 			std::cout << std::endl;
 			std::reverse(frequency_vec.begin() + permute_counter, frequency_vec.end());
@@ -102,53 +94,49 @@ void calculate(int order_num, int frequencies_num)
 
 		} while (std::next_permutation(frequency_vec.begin(), frequency_vec.end()));
 		permute_counter++;
-	} while (permute_counter < 4);
+	} while (permute_counter < 3);
 	//end function to get permutations
 
 	std::cout << "\nOrder " << std::fixed << std::setw(2) << order_num << " products: \n_______________________________\n\n";
 
-	for (int l = 0; l < unique_freq_orders; l++) //l to know how many times to rotate the frequency order
+	for (int l = 0; l < total.size(); l++) //l to rotate through all frequency permutations
 	{
 		for (int k = 0; k < coefficient_vec.size(); k++) //k to go through which coefficient combo
 		{
-			for (int i = 0, flag = 0; i < total.size(); i++)
+			for (int i = 0, flag = 0; i < total[l].size(); i++)
 			{
-				for (int step = 0, j = 0, time = 0; step < total.size() -1; step++, j++, time++) //i to go through frequency value, j to go through subarray of coefficient values.
+				for (int j = 0, time = 0; j < total[l].size() ; j++, time++) //i to go through frequency value, j to go through subarray of coefficient values.
 				{
-					if (2 <= permute_counter <= 3)
+					if (l >= (num_frequencies * (num_frequencies - 1)))
 					{
-						if (j < permute_counter)
-						{
-							sum += total[k][step] * coefficient_vec[k][j];
-							order_sum += coefficient_vec[k][j];
-							int test_condition_var = 0;
-							test_condition_var = coefficient_vec[k][j];
-							if (test_condition_var != 0)
-							{
-								if (coefficient_vec[k][j] >= 0) //if a positive value, add a positive sign to assist in formatting
-								{
-									equation += "+";
-								}
-
-								temp_holder = coefficient_vec[k][j]; //store value into float
-
-								output_format << std::fixed << std::setprecision(0) << temp_holder << " ";//format float
-								equation += output_format.str(); //add to string
-								output_format.str(""); //clear output string stream
-								equation += "* ";
-
-								temp_holder = frequency_vec[step];
-
-								output_format << std::fixed << std::setprecision(2) << temp_holder << " ";
-								equation += output_format.str();
-								output_format.str("");
-							}
-						}
+						return;
 					}
+						sum += total[l][j] * coefficient_vec[k][j];
+						order_sum += coefficient_vec[k][j];
+
+						if (coefficient_vec[k][j] >= 0) //if a positive value, add a positive sign to assist in formatting
+						{
+							equation += "+";
+						}
+
+						float temp_holder; //temporary variable for holding numbers
+						temp_holder = coefficient_vec[k][j]; //store value into float
+						output_format << std::fixed << std::setprecision(0) << temp_holder;//format float
+						equation += output_format.str(); //add to string
+						output_format.str(""); //clear output string stream
+						equation += " * ";
+						temp_holder = total[l][j];
+						output_format << std::fixed << std::setprecision(2) << temp_holder;
+						equation += output_format.str();
+						output_format.str("");	
+						if (time < total[l].size() - 1) //add a plus sign for continuing equation
+						{
+							equation += " + ";
+						}
 				}
-				if (sum < true)// (range_frequencies + frequency_vec[i])) //if sum is within range
+				if (sum < (range_frequencies + total[l][i])) //if sum is within range
 				{
-					if (true)//sum > (frequency_vec[i] - range_frequencies))
+					if (sum > (total[l][i] - range_frequencies))
 					{
 						flag = 1;
 					}
@@ -195,7 +183,6 @@ void calculate(int order_num, int frequencies_num)
 	}
 	result_vec.clear();
 }
-		
 
 int main()
 {
@@ -248,9 +235,12 @@ int main()
 
 					//generate list of coefficients for calculation
 					//std::cout << "Coefficient Combinations List:" << std::endl;
+					//freq_k.clear();
 					subsetSummation(coeffArray, order_increment);
-					//calculate intermodulation product
+
+					//calculate intermodulation product:
 					calculate(order_increment, num_frequencies);
+					//permute_counter++;
 				}
 			}
 
@@ -264,4 +254,9 @@ int main()
 	}
 }
 
+/*
+if it is third order, loop through 2 and 3 frequency combos.
+If it is fifth order and up, loop through only 2 frequency combos. 
 
+
+*/
