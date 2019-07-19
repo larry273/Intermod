@@ -1,0 +1,21 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Intermodulation Calculation Application/v16
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
+/Intermod Terminal Calculator/Debug
+/Intermod Terminal Calculator/Intermod Terminal Calculator/Debug
+/Intermod Terminal Calculator/.vs/Intermod Terminal Calculator/v16/Browse.VC.opendb
+/Intermod Terminal Calculator/.vs/Intermod Terminal Calculator/v16/Browse.VC.db
+/Intermod Terminal Calculator/.vs/Intermod Terminal Calculator/v16/.suo
+/Intermod Terminal Calculator/.vs/Intermod Terminal Calculator/v16/ipch/AutoPCH/4267752817781d0e/INTERMODCALCFULL.ipch
+/Intermod Terminal Calculator/x64/Debug
+/.vs/Intermod/v16
+/Intermod Terminal Calculator
+/IntermodGUI/.vs/IntermodGUI/v16
+/IntermodGUI/x64/Debug
+/IntermodGUI/GeneratedFiles/Debug
+/testing/x64/Debug
