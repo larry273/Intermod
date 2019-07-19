@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<META NAME="RF Intermodulation Calculator Output">
+<TITLE>RF Intermodulation Calculator Output</TITLE>
+</HEAD>
+
+<STYLE>
+    html *  { font-family: Arial;}
+    h1      {text-align: center;}
+    h2      {text-align: center;}
+
+    body {
+      background-color: #5a5c5e;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    table {
+      font-family: Arial;
+    }
+
+    .topInfo td{
+        padding: 30px;
+        padding-left: 45px;
+        padding-right: 45px;
+        width: 50%;
+    }
+    .freqValue td{
+        width: 33%;
+        padding: 10px;
+        background-color: #3F464D;
+    }
+
+    td {
+        text-align: center;
+    }
+
+    img {
+        text-align: center;
+    }
+
+    .topTitle {
+        padding: 30px;
+        background-color: #282C30;
+        width: 100%;
+        text-align: center;
+    }
+    #tableBG th {
+        background-color: #282C30;
+        width: 33%;
+        padding: 10px;
+    }
+
+</STYLE>
+
+<BODY>
+
+<p style="font-size:20pt; font-weight:600;" class="topTitle"><br>RF Intermodulation Output<br><span style="font-size:14pt;">DATE</span><br></p>
+
+<table class="topInfo" width="100%">
+    <tr>
+        <td><H2 width="50%" style="text-align:left">Search Window: RANGE kHz</H2></td>
+        <td><H2 width="50%" style="text-align:right">Calculation Cutoff: ORDER Order</H2></td>
+    </tr>
+</table>
+<table class="freqValue" id="tableBG" width="100%">
+        <tr >
+            <th width="33%"><H2>Name</H2></th>
+            <th width="33%"><H2>Transmit Freq (MHz)</H2></th>
+            <th width="33%"><H2>Recieve Freq (MHz)</H2></th>
+        </tr>
+        <!--FREQLIST-->
+        <tr>
+            <td width="33%"><H3>Freq 1</H3></td>
+            <td width="33%"><H3>400</H3></td>
+            <td width="33%"><H3>400</H3></td>
+        </tr>
+        <tr>
+            <td  width="33%"><H3>Freq 2</H3></td>
+            <td  width="33%"><H3>401</H3></td>
+            <td  width="33%"><H3>401</H3></td>
+        </tr>
+</table>
+<br>
+<center>
+    <img src=IMAGEBASE64 width='650' padding="20px">
+</center>
+
+<!--HITCATEGORY-->
+<H1 class="topInfo" style="text-align:left">3rd Order Harmonics:</H1>
+<table class="freqValue" id="tableBG" width="100%">
+        <tr >
+            <th width="40%"><H2>Intermodulation Freq</H2></th>
+            <th width="60%"><H2>Intermodulation Equation</H2></th>
+        </tr>
+<!--HITLIST-->
+        <tr>
+            <td width="40%"><H3>399 MHz</H3></td>
+            <td width="60%"><H3>2*400-1*401</H3></td>
+        </tr>
+</table>
+</BODY>
+</HTML>

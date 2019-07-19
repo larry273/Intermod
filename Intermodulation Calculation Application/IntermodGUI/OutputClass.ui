@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OutputClass</class>
+ <widget class="QWidget" name="OutputClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>700</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>RF Intermodulation Output</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#OutputClass{
+	background-color: #5a5c5e   ;
+}
+
+QLabel{
+	Font: 14pt &quot;Arial&quot;;
+	color: white;
+}
+
+QPushButton{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30    ;
+	border-radius: 5px;
+}
+QPushButton::pressed{
+	background-color: #577590; 
+}
+
+QLineEdit{
+	font: 14pt &quot;Arial&quot;;
+	background-color: #282c30    ;
+	border-radius: 5px;
+	color: white;
+	padding-left: 10;
+}
+
+QComboBox{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30    ;
+	border-radius: 5px;
+	padding-left: 30px;
+}
+
+QComboBox::drop-down{
+	width: 20;
+}
+
+QMessageBox {
+	background-color: #0D1218;
+	Font: 14pt &quot;Arial&quot;;
+}
+QMessageBox QPushButton {
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #1e2733    ;
+	border-radius: 5px;
+	height: 40;
+	width: 100;
+}
+
+/*TABLE VIEW */
+QTableView{
+	border-radius: 8;
+	background-color: #3f464d   ;
+	Font: 14pt;
+	color: white;
+	gridline-color: #1C2321;
+}
+
+QTableView:item:selected:focus {background-color: #577590 ;}
+QTableView:item:selected {background-color: #577590 ;}
+
+QTableView QTableCornerButton::section {
+	border-top-left-radius: 8;
+	background-color: #5F6366;
+}
+
+QHeaderView::section {
+	background-color: #282c30   ;
+	color: white;
+	font: Bold 14pt;
+	padding: 5;
+	padding-left: 4px;
+	border: 1px solid #6c6c6c;
+}
+QHeaderView::section:checked
+{
+	background-color:#0D1218   ;
+}
+
+</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>311</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="0" colspan="4">
+    <widget class="QTextBrowser" name="htmlView">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QPushButton" name="printButton">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>60</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Print</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="saveButton">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>60</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Save</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <widget class="QPushButton" name="closeButton">
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>60</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

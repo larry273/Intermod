@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>IntermodClass</class>
+ <widget class="QMainWindow" name="IntermodClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>836</width>
+    <height>664</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>RF Intermodulation Calculator</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#centralWidget{
+	background-color: #5a5c5e;
+}
+
+QLabel{
+	Font: 14pt &quot;Arial&quot;;
+	color: white;
+}
+
+QPushButton{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+}
+QPushButton::pressed{
+	background-color: #577590; 
+}
+
+QLineEdit{
+	font: 14pt &quot;Arial&quot;;
+	background-color: #282c30;
+	border-radius: 5px;
+	color: white;
+	padding-left: 10;
+}
+
+QComboBox{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+	padding-left: 30px;
+}
+
+QComboBox::drop-down{
+	width: 20;
+}
+
+QMessageBox {
+	background-color: #0D1218;
+	Font: 14pt &quot;Arial&quot;;
+}
+QMessageBox QPushButton {
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #1e2733    ;
+	border-radius: 5px;
+	height: 40;
+	width: 100;
+}
+
+/*TABLE VIEW */
+QTableView{
+	border-radius: 8;
+	background-color: #3f464d   ;
+	Font: 14pt;
+	color: white;
+	gridline-color: #1C2321;
+}
+
+QTableView:item:selected:focus {background-color: #577590 ;}
+QTableView:item:selected {background-color: #577590 ;}
+
+QTableView QTableCornerButton::section {
+	border-top-left-radius: 8;
+	background-color: #5F6366;
+}
+
+QHeaderView::section {
+	background-color: #282c30   ;
+	color: white;
+	font: Bold 14pt;
+	padding: 5;
+	padding-left: 4px;
+	border: 1px solid #6c6c6c;
+}
+QHeaderView::section:checked
+{
+	background-color:#0D1218   ;
+}
+
+</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="2" column="0" rowspan="2" colspan="2">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="3" column="0" colspan="4">
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="searchLine">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>35</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>500</string>
+          </property>
+          <property name="frame">
+           <bool>false</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="searchWindowLabel">
+          <property name="minimumSize">
+           <size>
+            <width>160</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>160</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Search Window:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="orderBox">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>35</height>
+           </size>
+          </property>
+          <property name="frame">
+           <bool>false</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string>3rd Order</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>5th Order</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>7th Order</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>9th Order</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>11th Order</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="cutoffLabel">
+          <property name="minimumSize">
+           <size>
+            <width>160</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Calculation Cutoff:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLabel" name="toleranceLabel">
+          <property name="text">
+           <string>± kHz</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>15</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="0" colspan="5">
+       <widget class="QLabel" name="titleLabel">
+        <property name="styleSheet">
+         <string notr="true">Font: Bold 18pt;</string>
+        </property>
+        <property name="text">
+         <string>RF Intermodulation Calculator</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="4">
+       <widget class="QPushButton" name="calculateButton">
+        <property name="minimumSize">
+         <size>
+          <width>180</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Calculate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QPushButton" name="helpButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Help</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QPushButton" name="clearButton">
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Clear</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="5">
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>350</height>
+         </size>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>225</number>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>45</number>
+        </attribute>
+        <row>
+         <property name="text">
+          <string>New Row</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>New Row</string>
+         </property>
+        </row>
+        <column>
+         <property name="text">
+          <string>Name</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Transmit Freq (MHz)</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Recieve Freq (MHz)</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save       Ctrl-S</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open     Ctrl-O</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="text">
+    <string>Print       Ctrl-P</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="IntermodGUI.qrc"/>
+ </resources>
+ <connections/>
+</ui>
