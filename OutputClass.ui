@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OutputClass</class>
+ <widget class="QWidget" name="OutputClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>698</width>
+    <height>869</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>RF Intermodulation Output</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#OutputClass{
+	background-color: #5a5c5e   ;
+}
+
+QLabel{
+	Font: 14pt &quot;Arial&quot;;
+	color: white;
+}
+
+QPushButton{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30    ;
+	border-radius: 5px;
+}
+QPushButton::pressed{
+	background-color: #577590; 
+}
+QPushButton:hover:!pressed{
+	background-color: #739bbe; 
+}
+QLineEdit{
+	font: 14pt &quot;Arial&quot;;
+	background-color: #282c30    ;
+	border-radius: 5px;
+	color: white;
+	padding-left: 10;
+}
+
+QComboBox{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30    ;
+	border-radius: 5px;
+	padding-left: 30px;
+}
+
+QComboBox::drop-down{
+	width: 20;
+}
+
+QMessageBox {
+	background-color: #0D1218;
+	Font: 14pt &quot;Arial&quot;;
+}
+QMessageBox QPushButton {
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #1e2733    ;
+	border-radius: 5px;
+	height: 40;
+	width: 100;
+}
+
+QDialog {
+	background-color: #0D1218;
+	Font: 14pt &quot;Arial&quot;;
+}
+QDialog QPushButton {
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #1e2733    ;
+	border-radius: 5px;
+	height: 40;
+	width: 100;
+	margin-bottom: 10px;
+}
+
+/*TABLE VIEW */
+QTableView{
+	border-radius: 8;
+	background-color: #3f464d   ;
+	Font: 14pt;
+	color: white;
+	gridline-color: #1C2321;
+}
+
+QTableView:item:selected:focus {background-color: #577590 ;}
+QTableView:item:selected {background-color: #577590 ;}
+
+QTableView QTableCornerButton::section {
+	border-top-left-radius: 8;
+	background-color: #5F6366;
+}
+
+QHeaderView::section {
+	background-color: #282c30   ;
+	color: white;
+	font: Bold 14pt;
+	padding: 5;
+	padding-left: 4px;
+	border: 1px solid #6c6c6c;
+}
+QHeaderView::section:checked
+{
+	background-color:#0D1218   ;
+}
+
+/*SCROLL BAR*/
+QScrollBar:vertical {
+     background:white;
+     width: 10;
+     margin: 0px 0 0px 0;
+	 border-radius: 2;
+ }
+ QScrollBar::handle:vertical {
+     background: #0D1218        ;
+     min-height: 30px;
+	border-radius: 2;
+ }
+QScrollBar::add-line:vertical {
+     background: #0D1218  ;
+     height: 0px;
+     subcontrol-position: bottom;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::sub-line:vertical {
+     background: #0D1218  ;
+     height: 0px;
+     subcontrol-position: top;
+     subcontrol-origin: margin;
+ }
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+     background: none;
+ }
+
+</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="0" colspan="6">
+    <widget class="QTextBrowser" name="htmlView">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="6">
+    <widget class="QFrame" name="frame_2">
+     <property name="styleSheet">
+      <string notr="true">QFrame{
+	background-color:#3f464d;
+	border-radius: 5px;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="6">
+    <widget class="QFrame" name="frame">
+     <property name="styleSheet">
+      <string notr="true">QFrame{
+	background-color:#3f464d;
+	border-radius: 5px;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="leftMargin">
+       <number>6</number>
+      </property>
+      <property name="topMargin">
+       <number>6</number>
+      </property>
+      <property name="rightMargin">
+       <number>6</number>
+      </property>
+      <property name="bottomMargin">
+       <number>6</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="saveButton">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Save report as a file</string>
+        </property>
+        <property name="text">
+         <string>Save</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="printButton">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Print output results</string>
+        </property>
+        <property name="text">
+         <string>Print</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="emailButton">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Email</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>409</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="closeButton">
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Exit</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+	background-color: rgba(255, 255, 255,0);
+}
+QPushButton::pressed{
+	background-color: #577590; 
+}
+QPushButton:hover:!pressed{
+	background-color: #739bbe; 
+}</string>
+        </property>
+        <property name="text">
+         <string>X</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>15</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
