@@ -11,6 +11,7 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <windows.h>
+#include <thread>
 #include "NumberManipulations.h"
 #include "CalculationTerminal.h"
 
@@ -28,8 +29,10 @@ class Intermod : public QMainWindow
 
 public:
 	Intermod(QWidget* parent = Q_NULLPTR);
-	//private slots:
-		//void calculateIntermod();
+
+public slots:
+	void showProgress(int progress);
+	void setMaxProgress(int max);
 
 protected:
 	QPoint oldPos;

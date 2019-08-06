@@ -139,7 +139,10 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CalculationTerminal.h" />
+    <QtMoc Include="CalculationTerminal.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtCharts;$(QTDIR)\include\QtPrintSupport</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtCharts;$(QTDIR)\include\QtPrintSupport</IncludePath>
+    </QtMoc>
     <ClInclude Include="Date.h" />
     <ClInclude Include="NumberManipulations.h" />
     <ClInclude Include="resource.h" />

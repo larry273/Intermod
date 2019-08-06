@@ -1,6 +1,7 @@
 #include "CalculationTerminal.h"
 //Constructor:
-CalculationTerminal::CalculationTerminal(void)
+CalculationTerminal::CalculationTerminal(QObject* parent)
+	: QObject(parent)
 {
 
 }//end constructor 
@@ -80,25 +81,52 @@ std::vector<std::vector<float>> CalculationTerminal::permutations_produce(std::v
 {
 	std::vector<float> freq(inputFreq);
 	std::sort(freq.begin(), freq.end());
-	freq.erase(unique(freq.begin(), freq.end()), freq.end());
-	int repeat = factorial(freq.size() - perm_num);
+	//int repeat = factorial(freq.size() - perm_num);
 	std::vector<std::vector<float>> total;
 	std::vector<float> p;
 	int result = factorial(freq.size()) / factorial(freq.size() - perm_num);
 
-	do
-	{
-		for (int i = 0; i < perm_num; i++)
-		{
-			p.push_back(freq[i]);
+	if (perm_num == 2) {
+		for (int i = 0; i < freq.size(); i++) {
+			for (int j = 0; j < freq.size(); j++) {
+				if (!(j == i)) {
+					p.push_back(freq[i]);
+					std::cout << freq[i] << " ";
+					p.push_back(freq[j]);
+					std::cout << freq[j] << " ";
+
+					std::cout << '\n';
+					total.push_back(p);
+					p.clear();
+				}
+			}
 		}
-		for (int i = 1; i != repeat; i++)
-		{
-			std::next_permutation(freq.begin(), freq.end());
+	}
+
+	if (perm_num == 3) {
+		for (int i = 0; i < freq.size(); i++) {
+			for (int j = 0; j < freq.size(); j++) {
+				if (!(j == i)) {
+					for (int n = 0; n < freq.size(); n++) {
+						if (!(n == i)) {
+							if (!(n == j)) {
+								p.push_back(freq[i]);
+								std::cout << freq[i] << " ";
+								p.push_back(freq[j]);
+								std::cout << freq[j] << " ";
+								p.push_back(freq[n]);
+								std::cout << freq[n] << " ";
+								std::cout << '\n';
+								total.push_back(p);
+								p.clear();
+							}
+						}
+					}
+				}
+			}
 		}
-		total.push_back(p);
-		p.clear();
-	} while (std::next_permutation(freq.begin(), freq.end()));
+	}
+
 	return total;
 }//end permutations_produce()
 
@@ -233,7 +261,9 @@ void CalculationTerminal::run(int order, float range, std::vector<float> rxFreq,
 	coefficient_possibilities_vec.clear();
 	coefficient_vec.clear();
 	result_vec_2d.clear();
-
+	progress_total += (order - 3 ) / 2;
+	progress_total *= 2;
+	emit this->progressMax(progress_total);
 	double input; //variable to reuse for inputs
 	
 		if (order % 2 == 1)
@@ -247,6 +277,9 @@ void CalculationTerminal::run(int order, float range, std::vector<float> rxFreq,
 				if (order_increment % 2 == 1)
 				{
 					calculate(order_increment);
+					progress_count++;
+					emit this->progressSignal(progress_count);
+					qDebug() << "calculate progress: " << progress_count;
 				}//end if
 			}//end for
 		}//end if

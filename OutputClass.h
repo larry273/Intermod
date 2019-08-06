@@ -20,6 +20,9 @@ class OutputClass : public QWidget
 {
 	Q_OBJECT
 
+signals:
+	void progressSignal(int progress);
+
 public:
 	OutputClass(QWidget *parent = Q_NULLPTR);
 	~OutputClass();
@@ -48,6 +51,7 @@ public:
 	int maxOrder;
 	float calcRange;
 	QString projectTitle;
+	int progress;
 
 protected:
 	QPoint oldPos;

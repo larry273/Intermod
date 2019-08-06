@@ -7,6 +7,9 @@
 #include <sstream>
 #include <algorithm>
 #include <numeric>
+#include <QObject>
+#include <QDebug>
+
 /**
 * @brief Calculation Code for Intermodulation Products
 *
@@ -14,8 +17,14 @@
 *
 * @author Larry Staecey & Raymond Bedry, RTP, E-Division, RCMP
 */
-class CalculationTerminal
+class CalculationTerminal : public QObject
 {
+	Q_OBJECT
+
+signals:
+	void progressSignal(int progress);
+	void progressMax(int max);
+
 private:
 
 	//functions:
@@ -74,7 +83,7 @@ public:
 	/** @brief Constructor
 	*	@return nothing to return
 	*/
-	CalculationTerminal(); 
+	CalculationTerminal(QObject* parent = Q_NULLPTR);
 	/** @brief Destructor
 	*	@return nothing to return
 	*/
@@ -91,6 +100,10 @@ public:
 	*	@return nothing to return
 	*/
 	void run(int order, float range, std::vector<float> rxFreq, std::vector<float> txFreq); 
+
+	//variables:
+	int progress_total = 2; ///Integer that will store the total number of calculations needed in order to display a progress bar
+	int progress_count = 1; ///Integer tht will count through the calculations to display current status in progress bar. 
 
 	//vectors:
 	std::vector<std::string> equation_vec; ///2D vector that will hold the equation in a string that was representative of a hit.

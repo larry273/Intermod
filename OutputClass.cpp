@@ -83,7 +83,7 @@ QString OutputClass::createOutputHTML(	std::vector<float> resultList,
 	if (rxList.size() > 2) {
 		morethanTwo = true;
 	}
-
+	int prog = this->progress;
 
 	int resultIndex = resultList.size()-1;
 	//Loop through index vector for each order
@@ -193,6 +193,9 @@ QString OutputClass::createOutputHTML(	std::vector<float> resultList,
 
 		//insert order block into html string
 		html.insert(orderIndex, sOrderBlock);
+		prog++;
+		emit this->progressSignal(prog);
+		qDebug() << "output progress: "<< prog;
 	}
 	//final html to ouput
 	std::string htmlOutput = "string";
@@ -202,13 +205,15 @@ QString OutputClass::createOutputHTML(	std::vector<float> resultList,
 //set the html output into the output window 
 void OutputClass::setHTML() {
 
+	QString graph;
+	graph = OutputClass::drawGraph(this->resultVector, this->rxVector, this->txVector, this->nameVector, this->orderVector, this->maxOrder);
+	QString graph64 = "\"data:image/png;base64, " + graph + "\"";
+
 	QString html;
 	html = OutputClass::createOutputHTML(this->resultVector, this->equationVector, this->rxVector, this->txVector, this->nameVector, this->maxOrder, this->calcRange, this->orderVector, this->hitVector);
 
 	//draw graph to base64 and set into html
-	QString graph;
-	graph = OutputClass::drawGraph(this->resultVector, this->rxVector, this->txVector, this->nameVector, this->orderVector, this->maxOrder);
-	QString graph64= "\"data:image/png;base64, " + graph + "\"";
+	
 	html.replace("IMAGEBASE64", graph64);
 
 	//set viewer html from created html
@@ -250,6 +255,21 @@ QString OutputClass::drawGraph(std::vector<float> resultList, std::vector<float>
 	axisY->setTitleBrush(QBrush(Qt::white));
 	chart->addAxis(axisY, Qt::AlignLeft);
 
+	//generate random colors
+	std::vector<QColor> colorList;
+	int colorIndex = 0;
+	for (int i = 0; i < rxList.size() + orderList.size(); i++) {
+		QColor color;
+		do {
+			quint32 rand = QRandomGenerator::global()->generate() + fmod(0.618033988749895 * i, 1);
+			qDebug() << rand;
+			//color = QColor::fromRgb(QRandomGenerator::global()->generate());
+			color = QColor::fromRgb(rand);
+		} while ((std::find(colorList.begin(), colorList.end(), color) != colorList.end()));
+		colorList.push_back(color);
+	}
+	std::random_shuffle(colorList.begin(), colorList.end());
+
 	//draw input rx with name onto graph
 	for (int i = 0; i < nameList.size(); i++) {
 		QString name = nameList[i];
@@ -261,10 +281,13 @@ QString OutputClass::drawGraph(std::vector<float> resultList, std::vector<float>
 		*series << QPointF(freq, 0) << QPointF(freq, 10);
 
 		chart->addSeries(series);
-		//set graphing line thickness
+
+		//set graphing line thickness + color
 		QPen pen = series->pen();
 		pen.setWidth(10);
+		pen.setColor(colorList[colorIndex]);
 		series->setPen(pen);
+		colorIndex++;
 			
 		//attach axis to each series
 		series->attachAxis(axisX);
@@ -301,8 +324,11 @@ QString OutputClass::drawGraph(std::vector<float> resultList, std::vector<float>
 		chart->addSeries(orderSeries);
 
 		QPen pen = orderSeries->pen();
+		QColor orderColor = colorList[colorIndex];
+		pen.setColor(orderColor);
 		orderSeries->setPen(pen);
-		QColor orderColor = pen.color();
+		colorIndex++;
+		qDebug() << orderColor;
 
 		for (int i = resultIndex; i > resultStop; i--) {
 
@@ -311,7 +337,7 @@ QString OutputClass::drawGraph(std::vector<float> resultList, std::vector<float>
 			QLineSeries* series = new QLineSeries();
 			//QString name = oText + "Order";
 			//series->setName(name);
-			*series << QPointF(vector, 0) << QPointF(vector, 10/orderInter);
+			*series << QPointF(vector, 0) << QPointF(vector, 25/orderInter);
 
 			chart->addSeries(series);
 
@@ -350,7 +376,7 @@ QString OutputClass::drawGraph(std::vector<float> resultList, std::vector<float>
 	chart->legend()->setLabelBrush(QBrush(Qt::white));
 	
 	//setbackground colors
-	chart->setPlotAreaBackgroundBrush(QBrush(QColor::fromRgb(63, 70, 77)));
+	chart->setPlotAreaBackgroundBrush(QBrush(QColor::fromRgb(63, 70, 77))); //63,70,77
 	chart->setPlotAreaBackgroundVisible(true);
 	chart->setBackgroundBrush(QBrush(QColor::fromRgb(40, 44, 48)));
 	chart->layout()->setContentsMargins(0, 0, 0, 0);

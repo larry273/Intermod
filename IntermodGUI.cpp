@@ -21,6 +21,7 @@ Intermod::Intermod(QWidget* parent)
 	header->setSectionResizeMode(3, QHeaderView::Stretch);
 	Intermod::clearValues();
 
+
 	//borderless rounded window setup
 	this->setWindowFlags(Qt::FramelessWindowHint);
 	QPainterPath path = QPainterPath();
@@ -40,6 +41,7 @@ Intermod::Intermod(QWidget* parent)
 	connect(ui.closeButton, &QPushButton::clicked, this, &Intermod::closeWindow);
 	connect(ui.maxButton, &QPushButton::clicked, this, &Intermod::maximizeWindow);
 	connect(ui.minButton, &QPushButton::clicked, this, &Intermod::minimizeWindow);
+
 
 	//set icons for max,min,close
 	QByteArray  maxIcon = "iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsAAAA7AAWrWiQkAAAP5SURBVHhe7ZxNSxVRAIY1qChDqChLolq06C9otojKkKBt/ZGIyBQqjKhNq35CQXsjpAT7zgrDpIigXZSRSUmmlfa+94xlMvc2C9Fz5n0feDhnps31znPnQ7unvru7uw5shedgB2yCK2AsfIL3YRcc4o4EaIY98BDk+1kPY2EU9sNO+IYB8AU+htthzEzC/fBBZSteNsFBuKOyFS+fYQs/6fxkxX7wyRp4KUyj5gSM/eCT9fA8AzhQ2UyDFtgQptHC034qtDOAxjBPhpiup3msysYUaIjpZq8Iz+BEmEZL7Pco/5BSAD/g8TCNGt79j4dp/KQQwE94D/JehY8vsfMatsFe+J07YqZIAPwdAa+7y+VKyDd0AKbCCDwM+eSS9zMtpTVJ7R7ALDIOQBwGkNJji1lkGIDPAsL44ItTJAA+f5uSUiSAX9loSogvAeI4AHEcgDgOQBwHII4DEMcBaDPlALSZdQDlZnU2VoUBOILyUug/hPjPwcIU+fRPZ6MpIUUCmMlGU0J8/RfHAYjjAMRxAOI4AHEcgDgOQBwHII4DEMcBiOMAxGEAU2GaC/8t+kUOTFX4ra5af8v5ygDuhnkuD7PRpAm/1fUkTHMZZAAnYd7CS6zndJiahOGKoHlnAZ7duxjAMGyFXNOGq3FyTR6eFbgq5x1o0qYPHoGvKlsBLrnbDp/OrRVsNOAytrwsjFW2gJ8CtPgI/xx84gDEcQDiOABxHIA4DkAcByCOAxDHAYjjAMRxAOI4AHEcgDgOQBwHII4DEMcBiOMAxHEA4jgAcRyAOA5AHAcgjgMQxwGI4wDEcQDiOABxHIA4DkAcByCOAxDHAYjjAMRxAOI4AHEcgDgOQBwHIM5cALvgVfgBjsLrcDc05WAbvAJfwOfwMtwC67hQJA/+I7iBO+bxBXIF0ZHKlkmVnZBrPjdVtv7yDrbyDNADFx580ggvhKlJGB7fhQefNMOLDIBrAldjXzaadDmYjXl0MIC8T/8ca7PRpMvGbMxjnZ8Cyk99NubiAMRxAOI4AHEcgDgOQBwHII4DEMcBiOMAxHEA4jgAcRyAOA5AHAcgjgMQxwGI4wDEcQDiOABxHIA4DkAcByCOAxDHAYjjAMRxAOI4AHEcgDgOQBwHIE6RAGaX0Rn4Hl6DXMomFeavuZT3cy2lNYn9DMDvtnN5k6OQ6xilEMHcmkvH4GbuiJmULgFcyeRMmEZNtTWXoiS1e4C2bIyZWmsuRQcDGA/TJPjvNS0CUvpQTfLF3g7zJLiVjTEzkI0p0M8AOiEXhYydMXg2TKOG7+dEmEbNN3iKAbyEXBH0BpyCscHX1Av3wLfcETnDcC/sg9PcERl8TTch7qfqhn4D3Ea1m9qyCGgAAAAASUVORK5CYII=";
@@ -65,14 +67,11 @@ Intermod::Intermod(QWidget* parent)
 	for (int i = 0; i < 112; i++) {
 		i = i + 1;
 		o = NumberToOrdinal(i);
-	
 		oText = " Order";
 		oText = o + oText;
 		ui.orderBox->addItem(oText);
 	}
 	ui.orderBox->setCurrentIndex(2);
-
-	
 }
 
 //Window max, min, and close buttons
@@ -93,8 +92,14 @@ void Intermod::closeWindow() {
 
 //get the values for intermod calculation from the interface
 void Intermod::getIntermodValues()
-{	
+{
+
 	Calculate = new CalculationTerminal();
+	connect(Calculate, &CalculationTerminal::progressSignal, this, &Intermod::showProgress);
+	connect(output, &OutputClass::progressSignal, this, &Intermod::showProgress);
+	connect(Calculate, &CalculationTerminal::progressMax, this, &Intermod::setMaxProgress);
+	ui.progressBar->setValue(0);
+
 	qDebug() << "-- Intermod calculation values from interface -- ";
 	//regular expressions for checking input
 	QRegExp re("[0-9]*\\.?[0-9]*"); //digits regular expression with decimal
@@ -137,6 +142,7 @@ void Intermod::getIntermodValues()
 	QString sTxFreq;
 
 	bool inputRow = false;
+	bool prevInputRow = true;
 	vector<int> inputCheck = { 0,0,0,0 };
 
 	//iterate through table to get rx and tx frequences and names associated 
@@ -154,7 +160,9 @@ void Intermod::getIntermodValues()
 						inputRow = true;
 					}
 				}
+				else prevInputRow = false;
 			}
+			else prevInputRow = false;
 		}
 
 		//check if a value is missing in the row
@@ -173,6 +181,13 @@ void Intermod::getIntermodValues()
 					return;
 				}
 			}
+			if (!prevInputRow) {
+				bool r = Intermod::messageIndicate("<big><b>Warning!</big></b><br> There are blank row[s] above row " + QString::number(row + 1) + "<br> Continue with calculation?", true);
+				if (!r) {
+					return;
+				}
+			}
+			prevInputRow = true;
 		}
 		
 		//parse values from table into ouput vectors
@@ -186,7 +201,14 @@ void Intermod::getIntermodValues()
 						Intermod::messageIndicate("Please enter a valid name in row " + QString::number(row+1));
 						return;
 					}
-					nameVector.push_back(name);
+					//check if name exists already
+					if (std::find(nameVector.begin(), nameVector.end(), name) != nameVector.end()) {
+						Intermod::messageIndicate("Please enter a unique name in row " + QString::number(row + 1));
+						return;
+					}
+					else {
+						nameVector.push_back(name);
+					}
 				}
 				else if (column == 2) {
 					qDebug() << "Tx Freq: " << ui.tableWidget->item(row, column)->text();
@@ -236,12 +258,15 @@ void Intermod::getIntermodValues()
 		output->equationVector = Calculate->equation_vec;
 		output->hitVector = Calculate->result_vec_2d;
 		output->orderVector = Calculate->result_size_vec;
+		output->progress = Calculate->progress_count;
 	}
 	else {
 		this->messageIndicate("Please input frequencies to calculate");
 		return;
 	}
-	
+
+	//this->showProgress(5);
+
 	Intermod::showOutput();
 	Calculate->~CalculationTerminal();
 	
@@ -252,14 +277,14 @@ void Intermod::clearValues(bool confirm){
 	
 		if (confirm) {
 			bool result;
-			QString msg = "Are you sure you want to clear the table?";
+			QString msg = "Are you <em><b>sure</em></b> you want to clear the table?";
 			result = Intermod::messageIndicate(msg, true);
 
 			if (!result) {
 				return;
 			}
 		}
-	
+	ui.progressBar->setValue(0);
 	//delete all rows, then reset to normal amount of rows
 	ui.tableWidget->setRowCount(0);
 	ui.titleLine->setText("");
@@ -371,7 +396,7 @@ void Intermod::saveInputs()
 void Intermod::loadInputs()
 {
 	bool result;
-	QString msg = "Are you sure you want to load new data? \nThis will overwrite and clear the table.\n All inputs and settings will be lost";
+	QString msg = "<p align='justify'>Are you <em><b>sure</em></b> you want to load new data? <br>This will overwrite and clear the table.<br> <em><b>All inputs and settings will be lost</em></b></p>";
 	result = Intermod::messageIndicate(msg, true);
 
 	if (!result) 
@@ -482,24 +507,24 @@ bool Intermod::messageIndicate(QString msg, bool yesNo) {
 
 void Intermod::showHelp() {
 	QString helpmsg =
-		"How to use the RF Intermodulation Calculator:\n\n"
-		"1. Input a name, recieving frequency and transmitting frequency for each frequency to be tested for intermodulation.\n"
-		"2. Select the cutoff order and search window for the calculation.\n"
-		"3. Press the \"Calculate\" button to run the calculation and produce an output report.\n\n"
-		"The output reports can be saved and re-opened.";
+		"<p align='justify'><b><u>How to use the RF Intermodulation Calculator:</u></b><br><br>"
+		"<b>1.</b> Input a name, recieving frequency and transmitting frequency for each frequency to be tested for intermodulation.<br><br>"
+		"<b>2.</b> Select the cutoff order and search window for the calculation.<br><br>"
+		"<b>3.</b> Press the \"Calculate\" button to run the calculation and produce an output report.<br><br>"
+		"The output reports can be saved and re-opened.</p>";
 	Intermod::messageIndicate(helpmsg);
 }
 
 void Intermod::showAbout()
 {
 	QString aboutmsg =
-		"This application calculates intermodulation products for 2 and 3 frequency combinations up to 111th order.\n\n"
-		"Developed by: Larry Staecey & Raymond Bedry, RCMP E-Division RTP Integration Engineering\n\n"
-		"Disclaimer: This software should not be used without proper authorization from the RCMP E-Division RTP.\n"
+		"<p align='justify'><b><big>About:</b></big><br>This application calculates intermodulation products for 2 and 3 frequency combinations up to 111th order.<br><br>"
+		
+		"<b><big>Disclaimer:</big></b><br> This software should not be used without proper authorization from the RCMP E-Division RTP.<br><br>"
 		"This software is limited in its ability to calculate products for more than 3 frequencies on third order"
-		"and more than 2 frequencies on 5th order and above.\n\n"
-		"Developed using QT Open Source and is not for redistribution, commericial use or resale.\n\n"
-		"PROPERTY OF:\nROYAL CANADIAN MOUNTED POLICE";
+		"and more than 2 frequencies on 5th order and above.<br><br>"
+		"Developed using QT Open Source and is not for redistribution, commericial use or resale.<br><br>"
+		"<b><big>Developed by:</big></b><br> Larry Staecey & Raymond Bedry, <br> RCMP E-Division RTP Integration Engineering<br><br> </p>";
 	Intermod::messageIndicate(aboutmsg);
 }
 
@@ -513,6 +538,18 @@ void Intermod::showOutput(){
 		output->show();
 		output->setHTML();
 	}
+}
+
+//set progress bar max value
+void Intermod::setMaxProgress(int max) {
+	ui.progressBar->setMaximum(max);
+}
+
+//update progress bar values
+void Intermod::showProgress(int progress) {
+	//qDebug() << "Current Progress: " << progress;
+	ui.progressBar->setValue(progress);
+
 }
 
 void Intermod::mousePressEvent(QMouseEvent* event) {
