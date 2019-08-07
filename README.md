@@ -1,6 +1,7 @@
-# Intermodulation-Calculation
-Intermodulation calculation source code 
-Calculates 2 and 3 frequency permutations on third order and 2 frequency permutations for 5th order up to Nth order
+# Intermodulation-Calculator
+
+Intermodulation Calculator
+Calculates the passive intermodulation for multifrequency radio communications. The calculator considers the intermodulation of 3 frequencies for 3rd order and 2 frequencies for greater than 3rd order intermodulation. Generates a PDF report of the interference within  a specified range.
 
 Written using C++ and Qt
 
